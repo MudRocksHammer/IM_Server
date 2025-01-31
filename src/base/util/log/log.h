@@ -16,6 +16,8 @@
 #include <stdarg.h>
 #include <map>
 #include "singleton.h"
+#include "ostype.h"
+#include <cstdarg>
 // #include "util.h"
 // #include "thread.h"
 

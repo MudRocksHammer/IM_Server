@@ -28,6 +28,7 @@
 #include <fcntl.h>
 #include <stdint.h>
 #include <signal.h>
+#include <cstdarg>
 
 #define closesocket ::close
 #define ioctlsocket ::ioctl
@@ -114,10 +115,10 @@ enum
 const uint32_t INVALID_UINT32 = (uint32_t)-1;
 const uint32_t INVALID_VALUE = 0;
 
-#define U8_t uint8_t
-#define I8_t int8_t
-#define U16_t uint16_t
-#define I16_t int16_t
+#define U8_t unsigned char
+#define I8_t char
+#define U16_t unsigned short
+#define I16_t short
 #define U32_t uint32_t
 #define I32_t int32_t
 #define U64_t uint64_t

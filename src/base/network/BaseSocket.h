@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ostype.h"
+#include <memory>
 
 enum class SOCKET_State
 {

@@ -330,5 +330,25 @@ void BaseSocket::_acceptNetSocket()
     char ip_str[64];
     while ((fd = accept(m_socket, (sockaddr *)&peer_addr, &addr_len)) != INVALID_SOCKET)
     {
-        }
+        BaseSocket::ptr pSocket = std::make_shared<BaseSocket>();
+        U32_t ip = ntohl(peer_addr.sin_addr.s_addr);
+        U16_t port = ntohs(peer_addr.sin_port);
+
+        snprintf(ip_str, sizeof(ip_str), "%d.%d.%d.%d", ip >> 24, (ip >> 16) & 0xff, (ip >> 8) & 0xff, ip & 0xff);
+
+        LOG_DEBUG(g_logger) << "Accept new socket";
+
+        pSocket->setSocket(fd);
+        pSocket->setCallback(m_callback);
+        pSocket->setState((int)SOCKET_State::SOCKET_STATE_CONNECTED);
+        pSocket->setRemoteIP(ip_str);
+        pSocket->setRemotePort(port);
+
+        _setNoDelay(fd);
+        _setNonBlock(fd);
+        addBaseSocket(pSocket);
+
+        // EventDispatch::getInstance()->addEvent(fd, SOCKET_READ | SOCKET_EXCEP);
+        m_callback(m_callback_data, NETLIB_MSG_CONNECT, (net_handle_t)fd, std::any{});
+    }
 }
